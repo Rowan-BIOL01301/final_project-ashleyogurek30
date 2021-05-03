@@ -25,14 +25,14 @@ library(tidyverse)
 ```{r read-examine-data}
 food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-18/food_consumption.csv')
 
-view(food_consumption)
+
 ```
 
 <br><br>
 
 ## Question 1
 
-#### Of beef, pork and poultry, which has the highest CO2 emmissions?
+#### Of beef, pork and poultry, which has the highest CO2 emmissions in the USA?
 
 ### Methods
 ```{r MethodsOne}
@@ -49,7 +49,7 @@ ggplot(team_usa)+
 
 ```
 
-### Answer
+###Answer
 
 It's beef!
 
@@ -71,6 +71,7 @@ food_consumption %>%
 ggplot(beef_eating)+
   aes(y = country, x = consumption, fill = country)+
   geom_col()+
+  labs(x = "Consumption", y = "Country") +
   theme(legend.position = "none")
 
 ```
@@ -83,23 +84,49 @@ Argentina.
 
 ## Question 3
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Which country has the highest fish consumption?
 
 ### Methods
+```{r MethodsThree}
+food_consumption %>%
+  filter(food_category ==  "Fish") %>%
+  arrange(-consumption) %>%
+  filter(consumption > 40) -> fish_cons
+
+ggplot(fish_cons)+
+  aes(y = country, x = consumption, fill = country)+
+  geom_col()+
+  labs(x = "Consumption", y = "Country") +
+  theme(legend.position = "none")
+
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+Maldives, shockingly  
 
 
 <br><br>
 
 ## Question 4
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Of beef, lamb & goat, which has the highest CO2 emmissions in Greece?
 
 ### Methods
+```{r MethodsFour}
+food_consumption %>%
+  filter(country == "Greece") %>%
+  filter(food_category == c("Beef", "Lamb & Goat")) -> team_greece
+
+ggplot(team_greece)+
+  aes(x = food_category, y = co2_emmission, fill = food_category)+
+  geom_col()+
+  labs(y = "CO2 Emmissions", x = "Livestock")+
+  scale_fill_discrete(name = "Category")+
+  theme_bw()
+
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+Beef again!
