@@ -1,9 +1,12 @@
 ---
 title: "Final Project"
 subtitle: "Data Science for Biologists, Spring 2021"
-author: "Your name goes here"
-output: html_document
-editor_options: 
+author: "Ashley Ogurek"
+output: 
+  html_document:
+    theme: yeti
+    highlight: breezedark
+editor_options:
   chunk_output_type: console
 ---
 
@@ -12,40 +15,69 @@ editor_options:
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, include = TRUE)
 
 # Load all libraries you use HERE:
+library(tidyverse)
 ```
 
 <br><br>
 
-## Introduction
+## I chose this data set because I've always been interested in the environment and ways we has humans can reduce our carbon footprint, so I thought choosing this data set would make this assignment fun and fascinating to me. This data set includes different food categories from each country [Food Consumption and CO2 Emissions](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md), as well as their total food consumption and CO2 emissions. 
 
 ```{r read-examine-data}
+food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-18/food_consumption.csv')
 
+view(food_consumption)
 ```
 
 <br><br>
 
 ## Question 1
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Of beef, pork and poultry, which has the highest CO2 emmissions?
 
 ### Methods
+```{r MethodsOne}
+food_consumption %>%
+  filter(country == "USA") %>%
+  filter(food_category == c("Pork", "Poultry", "Beef")) -> team_usa
+
+ggplot(team_usa)+
+  aes(x = food_category, y = co2_emmission, fill = food_category)+
+  geom_col()+
+  labs(y = "CO2 Emmissions", x = "Livestock")+
+  scale_fill_discrete(name = "Category")+
+  theme_bw()
+
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+It's beef!
 
 
 <br><br>
 
 ## Question 2
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Which country has the highest beef consumption?
 
 ### Methods
 
+```{r MethodsTwo}
+food_consumption %>%
+  filter(food_category ==  "Beef") %>%
+  arrange(-consumption) %>%
+  filter(consumption > 30) -> beef_eating
+
+ggplot(beef_eating)+
+  aes(y = country, x = consumption, fill = country)+
+  geom_col()+
+  theme(legend.position = "none")
+
+```
+
 ### Answer
 
-Replace this text with your answer to your question.
+Argentina.
 
 <br><br>
 
