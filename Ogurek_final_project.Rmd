@@ -23,7 +23,7 @@ library(tidyverse)
 ## I chose this data set because I've always been interested in the environment and ways we has humans can reduce our carbon footprint, so I thought choosing this data set would make this assignment fun and fascinating to me. This data set includes different food categories from each country [Food Consumption and CO2 Emissions](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md), as well as their total food consumption and CO2 emissions. 
 
 ```{r read-examine-data}
-food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-18/food_consumption.csv')
+food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-18/food_consumption.csv') #read dataset
 
 
 ```
@@ -37,15 +37,20 @@ food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatas
 ### Methods
 ```{r MethodsOne}
 food_consumption %>%
-  filter(country == "USA") %>%
-  filter(food_category == c("Pork", "Poultry", "Beef")) -> team_usa
+  filter(country == "USA") %>% #filtered by country
+  filter(food_category == c("Pork",
+                            "Poultry",
+                            "Beef")) -> team_usa #filtered by food category
 
 ggplot(team_usa)+
-  aes(x = food_category, y = co2_emmission, fill = food_category)+
-  geom_col()+
-  labs(y = "CO2 Emmissions", x = "Livestock")+
-  scale_fill_discrete(name = "Category")+
-  theme_bw()
+  aes(x = food_category, 
+      y = co2_emmission, 
+      fill = food_category)+ #plotted data with x any y data
+  geom_col()+ #created bar graph
+  labs(y = "CO2 Emmissions", 
+       x = "Livestock")+ #labeled x and y axis
+  scale_fill_discrete(name = "Category")+ #changed legend name
+  theme_bw() #set theme
 
 ```
 
@@ -64,15 +69,18 @@ It's beef!
 
 ```{r MethodsTwo}
 food_consumption %>%
-  filter(food_category ==  "Beef") %>%
-  arrange(-consumption) %>%
-  filter(consumption > 30) -> beef_eating
+  filter(food_category ==  "Beef") %>% #filtered by food category
+  arrange(-consumption) %>% #arranged by highest consumption to lowest
+  filter(consumption > 30) -> beef_eating #filtered consumptions only over 30
 
 ggplot(beef_eating)+
-  aes(y = country, x = consumption, fill = country)+
-  geom_col()+
-  labs(x = "Consumption", y = "Country") +
-  theme(legend.position = "none")
+  aes(y = country, 
+      x = consumption, 
+      fill = country)+ #plotted data into x and y axis
+  geom_col()+ #created bar graph
+  labs(x = "Consumption", 
+       y = "Country") + #labeled x and y axis
+  theme(legend.position = "none") #removed legend
 
 ```
 
@@ -89,15 +97,19 @@ Argentina.
 ### Methods
 ```{r MethodsThree}
 food_consumption %>%
-  filter(food_category ==  "Fish") %>%
-  arrange(-consumption) %>%
-  filter(consumption > 40) -> fish_cons
+  filter(food_category ==  "Fish") %>% #filtered by food
+  arrange(-consumption) %>% #arranged by highest consumption to lowest
+  filter(consumption > 40) -> fish_cons #filtered consumptions only over 40
 
 ggplot(fish_cons)+
-  aes(y = country, x = consumption, fill = country)+
-  geom_col()+
-  labs(x = "Consumption", y = "Country") +
-  theme(legend.position = "none")
+  aes(y = country, 
+      x = consumption, 
+      fill = country)+ #plotted data into x and y axis
+  geom_col()+ #created bar graph
+  labs(x = "Consumption", 
+       y = "Country") + #labeled x and y axis
+  theme(legend.position = "none")  #removed legend
+
 
 ```
 
@@ -115,15 +127,19 @@ Maldives, shockingly
 ### Methods
 ```{r MethodsFour}
 food_consumption %>%
-  filter(country == "Greece") %>%
-  filter(food_category == c("Beef", "Lamb & Goat")) -> team_greece
+  filter(country == "Greece") %>% #filtered by country
+  filter(food_category == c("Beef", 
+                            "Lamb & Goat")) -> team_greece #filtered by food
 
 ggplot(team_greece)+
-  aes(x = food_category, y = co2_emmission, fill = food_category)+
-  geom_col()+
-  labs(y = "CO2 Emmissions", x = "Livestock")+
-  scale_fill_discrete(name = "Category")+
-  theme_bw()
+  aes(x = food_category, 
+      y = co2_emmission, 
+      fill = food_category)+ #inserted data into x and y axis
+  geom_col()+ #created bar graph
+  labs(y = "CO2 Emmissions", 
+       x = "Livestock")+ #labeled x and y axis
+  scale_fill_discrete(name = "Category")+ #renamed legend
+  theme_bw() #set theme
 
 ```
 
